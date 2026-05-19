@@ -5,45 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Franciele &amp; Anderson — 27.09.2026</title>
 
-  <!-- =====================================================
-       FONTES
-       Cormorant Garamond: elegante, sofisticada, romântica
-       Jost: moderna e limpa para textos de apoio
-  ====================================================== -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
-    /* ====================================================
-       VARIÁVEIS GLOBAIS
-       Edite aqui para alterar cores e fontes do site inteiro
-    ==================================================== */
     :root {
-      --cor-branco:       #FAF8F5;   /* branco quente predominante        */
+      --cor-branco:       #FAF8F5;
       --cor-branco-puro:  #FFFFFF;
-      --cor-terracota:    #B5604A;   /* terracota — cor de destaque        */
+      --cor-terracota:    #B5604A;
       --cor-terracota-claro: #D4856D;
       --cor-terracota-escuro: #8C4535;
-      --cor-texto:        #3A2E2A;   /* texto principal (marrom muito escuro) */
-      --cor-texto-leve:   #7A6A63;   /* texto secundário                  */
-      --cor-borda:        #E8DEDA;   /* bordas e divisores suaves          */
+      --cor-texto:        #3A2E2A;
+      --cor-texto-leve:   #7A6A63;
+      --cor-borda:        #E8DEDA;
       --fonte-titulo:     'EB Garamond', serif;
       --fonte-corpo:      'Jost', sans-serif;
       --fonte-contagem:   'Open Sans', serif;
       --sombra-suave:     0 4px 40px rgba(58, 46, 42, 0.08);
     }
 
-    /* ====================================================
-       RESET E BASE
-    ==================================================== */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    /* Força o tema claro independente do navegador */
     html {
       color-scheme: only light;
       scroll-behavior: smooth;
@@ -56,20 +43,15 @@
       line-height: 1.7;
       font-weight: 300;
       overflow-x: hidden;
-      /* Força cores mesmo com tema escuro do SO */
       forced-color-adjust: none;
     }
 
-    /* ====================================================
-       UTILITÁRIOS
-    ==================================================== */
     .container {
       width: 90%;
       max-width: 820px;
       margin: 0 auto;
     }
 
-    /* Separador ornamental entre seções */
     .ornamento {
       display: flex;
       align-items: center;
@@ -93,7 +75,6 @@
       flex-shrink: 0;
     }
 
-    /* Título de seção padrão */
     .secao-label {
       font-family: var(--fonte-corpo);
       font-weight: 400;
@@ -120,7 +101,6 @@
       max-width: 560px;
     }
 
-    /* Botão principal */
     .btn {
       display: inline-block;
       padding: 14px 36px;
@@ -144,7 +124,6 @@
       box-shadow: 0 8px 24px rgba(181, 96, 74, 0.3);
     }
 
-    /* Botão preenchido */
     .btn-solid {
       background: var(--cor-terracota);
       color: var(--cor-branco-puro);
@@ -154,7 +133,6 @@
       border-color: var(--cor-terracota-escuro);
     }
 
-    /* Animação de entrada (fade + subida suave) */
     .fade-in {
       opacity: 0;
       transform: translateY(28px);
@@ -166,16 +144,14 @@
     }
 
     /* ====================================================
-       SEÇÃO 1 — HERO (CAPA)
-       ============================================================
-       👇 PARA ADICIONAR SUA FOTO:
-          Substitua a URL abaixo (valor de --hero-bg) pelo link
-          da sua foto de casal. Ex:
-          --hero-bg: url('https://seu-link.com/foto.jpg');
+       SEÇÃO HERO — CORREÇÃO MOBILE
+       Substituído background-image por <img> com object-fit.
+       Isso resolve 3 problemas de uma vez:
+         1. background-attachment:fixed quebra no iOS (foto some)
+         2. background-position não funciona igual em todos os browsers mobile
+         3. <img> + object-fit é o padrão mais confiável para cobrir área
     ==================================================== */
     #hero {
-      --hero-bg: url('https://raw.githubusercontent.com/yNinooo/Casamento_F-A/refs/heads/main/IMG_0071.jpeg');
-
       position: relative;
       min-height: 100svh;
       display: flex;
@@ -183,18 +159,26 @@
       justify-content: center;
       text-align: center;
       padding: 60px 20px;
-
-      background-image: var(--hero-bg);
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed; /* efeito parallax suave */
+      overflow: hidden; /* garante que a img não vaze */
     }
 
-    /* Overlay para garantir legibilidade sobre a foto */
+    /* A foto como elemento real — ocupa todo o hero */
+    .hero-foto {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;        /* cobre toda a área sem distorcer        */
+      object-position: center center; /* foca no centro onde vocês estão  */
+      z-index: 0;
+    }
+
+    /* Overlay para legibilidade — idêntico ao original */
     #hero::before {
       content: '';
       position: absolute;
       inset: 0;
+      z-index: 1;
       background: linear-gradient(
         to bottom,
         rgba(250, 248, 245, 0.45) 0%,
@@ -205,7 +189,7 @@
 
     .hero-conteudo {
       position: relative;
-      z-index: 1;
+      z-index: 2; /* acima da foto E do overlay */
     }
 
     .hero-data-label {
@@ -230,7 +214,7 @@
       display: block;
       font-style: italic;
       color: var(--cor-terracota-claro);
-      font-size: 0.55em; /* "&" menor */
+      font-size: 0.55em;
       letter-spacing: 0.05em;
       margin: 4px 0;
     }
@@ -255,7 +239,7 @@
     }
 
     /* ====================================================
-       SEÇÃO 2 — SOBRE O CASAL
+       DEMAIS SEÇÕES — sem alteração
     ==================================================== */
     #sobre {
       padding: 100px 20px;
@@ -277,9 +261,6 @@
       font-style: italic;
     }
 
-    /* ====================================================
-       SEÇÃO 3 — DETALHES DO EVENTO
-    ==================================================== */
     #detalhes {
       padding: 100px 20px;
       background: linear-gradient(135deg, #F5EDE9 0%, var(--cor-branco) 100%);
@@ -328,9 +309,6 @@
       line-height: 1.5;
     }
 
-    /* ====================================================
-       SEÇÃO 4 — RSVP (CONFIRMAÇÃO DE PRESENÇA)
-    ==================================================== */
     #rsvp {
       padding: 100px 20px;
       background: var(--cor-branco);
@@ -368,7 +346,6 @@
       color: var(--cor-texto);
       appearance: none;
       transition: border-color 0.3s;
-      /* Força cores claras no input */
       color-scheme: light;
     }
 
@@ -378,7 +355,6 @@
       border-color: var(--cor-terracota);
     }
 
-    /* Wrapper para o select ter seta customizada */
     .campo.select-wrapper {
       position: relative;
     }
@@ -404,21 +380,15 @@
       margin-top: 24px;
     }
 
-    /* ====================================================
-       SEÇÃO 5 — LISTA DE PRESENTES
-    ==================================================== */
     #presentes {
       padding: 100px 20px;
       background: linear-gradient(135deg, #F5EDE9 0%, var(--cor-branco) 100%);
       text-align: center;
     }
 
-    /* ====================================================
-       SEÇÃO 6 — CONTAGEM REGRESSIVA
-    ==================================================== */
     #countdown {
       padding: 100px 20px;
-      background: var(--cor-texto);  /* fundo escuro para contraste */
+      background: var(--cor-texto);
       text-align: center;
       color: var(--cor-branco);
     }
@@ -472,9 +442,6 @@
       padding-top: 8px;
     }
 
-    /* ====================================================
-       RODAPÉ
-    ==================================================== */
     #rodape {
       padding: 60px 20px;
       background: var(--cor-branco);
@@ -507,9 +474,6 @@
       text-transform: uppercase;
     }
 
-    /* ====================================================
-       NAV LATERAL (bolinhas de navegação)
-    ==================================================== */
     #nav-pontos {
       position: fixed;
       right: 20px;
@@ -535,11 +499,8 @@
       transform: scale(1.3);
     }
 
-    /* ====================================================
-       RESPONSIVO
-    ==================================================== */
     @media (max-width: 600px) {
-      #hero { background-attachment: scroll; }
+      /* hero-foto já cuida do mobile via object-fit */
 
       .countdown-grid { gap: 12px; }
       .countdown-bloco { min-width: 70px; }
@@ -554,31 +515,36 @@
 
 <body>
 
-  <!-- ========================================================
-       NAV LATERAL — bolinhas de seção (escondida no mobile)
-  ======================================================== -->
-  <nav id="nav-pontos" aria-label="Navegação por seções">
-    <!-- Geradas pelo JS abaixo -->
-  </nav>
+  <nav id="nav-pontos" aria-label="Navegação por seções"></nav>
 
   <!-- ========================================================
-       SEÇÃO 1 — HERO / CAPA
-       👇 Para trocar a foto: edite a variável --hero-bg no CSS
-          (busque por "#hero" na seção de estilos acima)
+       SEÇÃO 1 — HERO
+       MUDANÇA: removido background-image do CSS.
+       A foto agora é uma tag <img> com object-fit:cover,
+       que funciona corretamente em todos os dispositivos.
+
+       👇 Para trocar a foto: mude o atributo src abaixo
   ======================================================== -->
   <section id="hero">
-    <div class="hero-conteudo fade-in">
 
+    <!-- FOTO DE FUNDO — troque o src para mudar a foto -->
+    <img
+      class="hero-foto"
+      src="https://raw.githubusercontent.com/yNinooo/Casamento_F-A/refs/heads/main/IMG_0071.jpeg"
+      alt=""
+      aria-hidden="true"
+      fetchpriority="high"
+    />
+
+    <div class="hero-conteudo fade-in">
       <span class="hero-data-label">27 de Setembro de 2026</span>
 
-      <!-- Nome dos noivos -->
       <h1 class="hero-nomes">
         Franciele
         <span>&amp;</span>
         Anderson
       </h1>
 
-      <!-- Frase romântica — edite aqui se quiser outra -->
       <p class="hero-frase">
         "Dois caminhos que se encontraram e escolheram,<br>
         a partir de hoje, caminhar como um só."
@@ -586,30 +552,19 @@
 
       <p class="hero-data">27 · 09 · 2026 &nbsp;|&nbsp; Santo André, SP</p>
 
-      <!-- Botão âncora para o RSVP -->
       <a href="#rsvp" class="btn btn-solid">Confirmar Presença</a>
-
     </div>
-  </section><!-- fim #hero -->
+  </section>
 
 
-  <!-- ========================================================
-       SEÇÃO 2 — SOBRE O CASAL
-       Edite o texto abaixo para contar a história de vocês
-  ======================================================== -->
   <section id="sobre">
     <div class="container">
-
       <div class="fade-in" style="text-align:center;">
         <span class="secao-label">Nossa história</span>
       </div>
-
-      <!-- Separador ornamental -->
       <div class="ornamento fade-in" aria-hidden="true">
         <svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
       </div>
-
-      <!-- ✏️ Edite este texto para contar a história real de vocês -->
       <p class="sobre-texto fade-in">
         Foi num momento simples que o destino fez sua parte —
         um olhar, um sorriso, e algo que nenhuma palavra consegue
@@ -619,25 +574,17 @@
         e Anderson celebram não apenas uma data, mas a
         <em>escolha de uma vida inteira</em> juntos.
       </p>
-
     </div>
-  </section><!-- fim #sobre -->
+  </section>
 
 
-  <!-- ========================================================
-       SEÇÃO 3 — DETALHES DO EVENTO
-  ======================================================== -->
   <section id="detalhes">
     <div class="container">
-
       <div class="fade-in" style="text-align:center;">
         <span class="secao-label">O grande dia</span>
         <h2 class="secao-titulo">Detalhes do evento</h2>
       </div>
-
       <div class="detalhes-grid fade-in">
-
-        <!-- Card: Data -->
         <div class="detalhe-card">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <rect x="3" y="4" width="18" height="18" rx="2"/>
@@ -648,36 +595,27 @@
           <h3>Data</h3>
           <p>27 de Setembro<br>de 2026</p>
         </div>
-
-        <!-- Card: Horário — ✏️ EDITE O HORÁRIO AQUI -->
         <div class="detalhe-card">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="12" cy="12" r="9"/>
             <polyline points="12 7 12 12 15 15"/>
           </svg>
           <h3>Horário</h3>
-          <!-- 👇 Altere o horário abaixo -->
           <p>17h00<br><small style="font-size:0.85em;color:var(--cor-texto-leve);">Cerimônia</small></p>
         </div>
-
-        <!-- Card: Local + botão Google Maps -->
         <div class="detalhe-card">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
             <circle cx="12" cy="9" r="2.5"/>
           </svg>
           <h3>Local</h3>
-          <!-- Endereço completo -->
           <p style="font-size:0.95rem;">
             R. Tiriba, 200<br>
             Recreio da Borda do Campo<br>
             Santo André — SP
           </p>
         </div>
-
-      </div><!-- fim .detalhes-grid -->
-
-      <!-- Botão Google Maps -->
+      </div>
       <div style="text-align:center;" class="fade-in">
         <a
           href="https://www.google.com/maps/search/?api=1&query=R.+Tiriba,+200+-+Recreio+da+Borda+do+Campo,+Santo+Andr%C3%A9+-+SP,+09134-520"
@@ -688,17 +626,12 @@
           Ver no Google Maps
         </a>
       </div>
-
     </div>
-  </section><!-- fim #detalhes -->
+  </section>
 
 
-  <!-- ========================================================
-       SEÇÃO 4 — RSVP (CONFIRMAÇÃO DE PRESENÇA)
-  ======================================================== -->
   <section id="rsvp">
     <div class="container">
-
       <div class="fade-in" style="text-align:center;">
         <span class="secao-label">Confirmar presença</span>
         <h2 class="secao-titulo">Você vai com a gente?</h2>
@@ -706,17 +639,11 @@
           Por favor, confirme sua presença até <strong>31 de agosto de 2026</strong>.
         </p>
       </div>
-
-      <!-- Formulário RSVP simples -->
-      <!-- ⚙️ Para integrar com um backend real, substitua a função
-           enviarRSVP() no JavaScript abaixo pelo seu endpoint de API -->
       <div class="rsvp-form fade-in">
-
         <div class="campo">
           <label for="rsvp-nome">Seu nome completo</label>
           <input type="text" id="rsvp-nome" placeholder="Como você se chama?" autocomplete="name" />
         </div>
-
         <div class="campo select-wrapper">
           <label for="rsvp-confirmacao">Você vai comparecer?</label>
           <select id="rsvp-confirmacao">
@@ -725,29 +652,17 @@
             <option value="nao">✗ Infelizmente não poderei ir</option>
           </select>
         </div>
-
         <button class="btn btn-solid" onclick="enviarRSVP()" style="width:100%;justify-content:center;">
           Enviar confirmação
         </button>
-
-        <!-- Mensagem de sucesso (aparece após envio) -->
-        <div class="rsvp-sucesso" id="rsvp-sucesso">
-          <!-- Mensagem preenchida pelo JS conforme resposta -->
-        </div>
-
+        <div class="rsvp-sucesso" id="rsvp-sucesso"></div>
       </div>
-
     </div>
-  </section><!-- fim #rsvp -->
+  </section>
 
 
-  <!-- ========================================================
-       SEÇÃO 5 — LISTA DE PRESENTES
-       👇 Substitua o # no href pelo link da sua lista de presentes
-  ======================================================== -->
   <section id="presentes">
     <div class="container">
-
       <div class="fade-in" style="text-align:center;">
         <span class="secao-label">Lista de presentes</span>
         <h2 class="secao-titulo">Presenteie com amor</h2>
@@ -756,34 +671,20 @@
           abençoar ainda mais com um mimo especial, preparamos
           uma lista com muito carinho.
         </p>
-
-        <!-- 👇 Substitua o "#" pelo link real da lista de presentes -->
-        <a
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn"
-        >
+        <a href="#" target="_blank" rel="noopener noreferrer" class="btn">
           Ver lista de presentes
         </a>
       </div>
-
     </div>
-  </section><!-- fim #presentes -->
+  </section>
 
 
-  <!-- ========================================================
-       SEÇÃO 6 — CONTAGEM REGRESSIVA
-  ======================================================== -->
   <section id="countdown">
     <div class="container">
-
       <div class="fade-in">
         <span class="secao-label">Faltam apenas</span>
         <h2 class="secao-titulo" style="color:var(--cor-branco);">Dias para o grande dia</h2>
       </div>
-
-      <!-- Blocos de contagem — atualizados pelo JavaScript -->
       <div class="countdown-grid fade-in">
         <div class="countdown-bloco">
           <span class="countdown-numero" id="cd-dias">--</span>
@@ -805,48 +706,26 @@
           <span class="countdown-label">Segundos</span>
         </div>
       </div>
-
     </div>
-  </section><!-- fim #countdown -->
+  </section>
 
 
-  <!-- ========================================================
-       RODAPÉ
-  ======================================================== -->
   <footer id="rodape">
     <div class="container fade-in">
-
-      <!-- Separador ornamental final -->
       <div class="ornamento" aria-hidden="true">
         <svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
       </div>
-
       <p class="rodape-nomes">Franciele &amp; Anderson</p>
-      <p class="rodape-mensagem">
-        "E o amor que nos une será para sempre a nossa maior história."
-      </p>
+      <p class="rodape-mensagem">"E o amor que nos une será para sempre a nossa maior história."</p>
       <p class="rodape-data">27 · 09 · 2026</p>
-
     </div>
-  </footer><!-- fim #rodape -->
+  </footer>
 
 
-  <!-- ============================================================
-       JAVASCRIPT
-       - Navegação por pontos laterais
-       - Animação de entrada ao rolar (Intersection Observer)
-       - Contagem regressiva
-       - Envio do formulário RSVP
-  ============================================================ -->
   <script>
-    /* -------------------------------------------------------
-       NAVEGAÇÃO POR PONTOS LATERAIS
-       (bolinhas que indicam em qual seção o usuário está)
-    ------------------------------------------------------- */
     const secoes = ['hero', 'sobre', 'detalhes', 'rsvp', 'presentes', 'countdown'];
     const navPontos = document.getElementById('nav-pontos');
 
-    // Cria um ponto para cada seção
     secoes.forEach((id, i) => {
       const ponto = document.createElement('div');
       ponto.className = 'nav-ponto';
@@ -858,7 +737,6 @@
       navPontos.appendChild(ponto);
     });
 
-    // Atualiza o ponto ativo conforme scroll
     const atualizarPontos = () => {
       const pontos = navPontos.querySelectorAll('.nav-ponto');
       secoes.forEach((id, i) => {
@@ -871,47 +749,31 @@
       });
     };
     window.addEventListener('scroll', atualizarPontos, { passive: true });
-    atualizarPontos(); // estado inicial
+    atualizarPontos();
 
-
-    /* -------------------------------------------------------
-       ANIMAÇÃO DE ENTRADA (FADE-IN AO ROLAR)
-       Usa Intersection Observer para disparar a animação
-       quando o elemento entra na viewport
-    ------------------------------------------------------- */
     const observador = new IntersectionObserver((entradas) => {
       entradas.forEach(entrada => {
         if (entrada.isIntersecting) {
           entrada.target.classList.add('visivel');
-          observador.unobserve(entrada.target); // anima só uma vez
+          observador.unobserve(entrada.target);
         }
       });
-    }, { threshold: 0.15 }); // 15% do elemento visível já dispara
+    }, { threshold: 0.15 });
 
-    // Observa todos os elementos com classe .fade-in
     document.querySelectorAll('.fade-in').forEach(el => observador.observe(el));
 
-    // Garante que o hero (seção 1) já aparece visível no carregamento
     setTimeout(() => {
       document.querySelectorAll('#hero .fade-in').forEach(el => el.classList.add('visivel'));
     }, 150);
 
-
-    /* -------------------------------------------------------
-       CONTAGEM REGRESSIVA
-       Data alvo: 27 de setembro de 2026 às 17h00
-       ✏️ Para alterar o horário, mude o valor '17' abaixo
-    ------------------------------------------------------- */
-    const dataAlvo = new Date('2026-09-27T17:00:00'); // horário da cerimônia
-
-    const pad = n => String(n).padStart(2, '0'); // adiciona zero à esquerda
+    const dataAlvo = new Date('2026-09-27T17:00:00');
+    const pad = n => String(n).padStart(2, '0');
 
     const atualizarContagem = () => {
       const agora = new Date();
       const diff  = dataAlvo - agora;
 
       if (diff <= 0) {
-        // Chegou o dia! Exibe mensagem especial
         document.querySelectorAll('.countdown-numero').forEach(el => el.textContent = '00');
         return;
       }
@@ -927,51 +789,26 @@
       document.getElementById('cd-segundos').textContent= pad(segundos);
     };
 
-    atualizarContagem();                      // roda imediatamente
-    setInterval(atualizarContagem, 1000);     // atualiza a cada segundo
+    atualizarContagem();
+    setInterval(atualizarContagem, 1000);
 
-
-    /* -------------------------------------------------------
-       FORMULÁRIO RSVP
-       ⚙️ Por padrão, exibe uma mensagem local.
-          Para integrar com backend real, substitua o conteúdo
-          da função enviarRSVP() pelo seu fetch() para API.
-    ------------------------------------------------------- */
     function enviarRSVP() {
-      const nome         = document.getElementById('rsvp-nome').value.trim();
-      const confirmacao  = document.getElementById('rsvp-confirmacao').value;
-      const divSucesso   = document.getElementById('rsvp-sucesso');
+      const nome        = document.getElementById('rsvp-nome').value.trim();
+      const confirmacao = document.getElementById('rsvp-confirmacao').value;
+      const divSucesso  = document.getElementById('rsvp-sucesso');
 
-      // Validação básica
-      if (!nome) {
-        alert('Por favor, informe seu nome.');
-        return;
-      }
-      if (!confirmacao) {
-        alert('Por favor, informe se vai comparecer.');
-        return;
-      }
+      if (!nome) { alert('Por favor, informe seu nome.'); return; }
+      if (!confirmacao) { alert('Por favor, informe se vai comparecer.'); return; }
 
-      // ✅ Resposta conforme a escolha
       if (confirmacao === 'sim') {
-        divSucesso.innerHTML = `
-          🤍 Que alegria, <em>${nome}</em>!<br>
-          Estamos ansiosos para celebrar com você.
-        `;
+        divSucesso.innerHTML = `🤍 Que alegria, <em>${nome}</em>!<br>Estamos ansiosos para celebrar com você.`;
       } else {
-        divSucesso.innerHTML = `
-          Obrigado por avisar, <em>${nome}</em>.<br>
-          Sentiremos muito a sua falta. ❤️
-        `;
+        divSucesso.innerHTML = `Obrigado por avisar, <em>${nome}</em>.<br>Sentiremos muito a sua falta. ❤️`;
       }
 
       divSucesso.style.display = 'block';
-
-      // Limpa o formulário após envio
       document.getElementById('rsvp-nome').value = '';
       document.getElementById('rsvp-confirmacao').value = '';
-
-      // Rola até a mensagem de sucesso
       divSucesso.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   </script>
