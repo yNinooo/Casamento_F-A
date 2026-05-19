@@ -169,7 +169,10 @@
       width: 100%;
       height: 100%;
       object-fit: cover;        /* cobre toda a área sem distorcer        */
-      object-position: center center; /* foca no centro onde vocês estão  */
+      object-position: 70% center; /* 👈 AJUSTE DE ENQUADRAMENTO MOBILE
+                                       Aumentar % → move o foco para a direita
+                                       Diminuir %  → move o foco para a esquerda
+                                       Exemplos: 50% = centro, 85% = quase borda direita */
       z-index: 0;
     }
 
@@ -197,7 +200,9 @@
       font-size: 0.72rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--cor-terracota);
+      color: var(--cor-terracota-escuro); /* 👈 COR DO TEXTO "27 de Setembro de 2026" (topo)
+                                              Para clarear: troque por --cor-terracota
+                                              Para escurecer mais: use #5A2D20 */
       margin-bottom: 24px;
       display: block;
     }
@@ -234,7 +239,9 @@
       font-family: var(--fonte-corpo);
       font-size: 0.85rem;
       letter-spacing: 0.2em;
-      color: var(--cor-texto-leve);
+      color: var(--cor-texto); /* 👈 COR DO TEXTO "27 · 09 · 2026 | Santo André" (rodapé do hero)
+                                    Para clarear: troque por --cor-texto-leve
+                                    Para escurecer mais: use #1A0E0A */
       margin-bottom: 40px;
     }
 
