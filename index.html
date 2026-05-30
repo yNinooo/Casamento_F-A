@@ -144,12 +144,7 @@
     }
 
     /* ====================================================
-       SEÇÃO HERO — CORREÇÃO MOBILE
-       Substituído background-image por <img> com object-fit.
-       Isso resolve 3 problemas de uma vez:
-         1. background-attachment:fixed quebra no iOS (foto some)
-         2. background-position não funciona igual em todos os browsers mobile
-         3. <img> + object-fit é o padrão mais confiável para cobrir área
+       SEÇÃO HERO
     ==================================================== */
     #hero {
       position: relative;
@@ -159,16 +154,16 @@
       justify-content: center;
       text-align: center;
       padding: 60px 20px;
-      overflow: hidden; /* garante que a img não vaze */
+      overflow: hidden;
     }
 
-    /* A foto como elemento real — ocupa todo o hero */
+    /* FOTO DE FUNDO — troque o src na tag <img class="hero-foto"> no HTML */
     .hero-foto {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;        /* cobre toda a área sem distorcer        */
+      object-fit: cover;
       object-position: 75% center; /* 👈 AJUSTE DE ENQUADRAMENTO MOBILE
                                        Aumentar % → move o foco para a direita
                                        Diminuir %  → move o foco para a esquerda
@@ -176,7 +171,6 @@
       z-index: 0;
     }
 
-    /* Overlay para legibilidade — idêntico ao original */
     #hero::before {
       content: '';
       position: absolute;
@@ -192,7 +186,7 @@
 
     .hero-conteudo {
       position: relative;
-      z-index: 2; /* acima da foto E do overlay */
+      z-index: 2;
     }
 
     .hero-data-label {
@@ -246,7 +240,7 @@
     }
 
     /* ====================================================
-       DEMAIS SEÇÕES — sem alteração
+       SOBRE
     ==================================================== */
     #sobre {
       padding: 100px 20px;
@@ -268,6 +262,9 @@
       font-style: italic;
     }
 
+    /* ====================================================
+       DETALHES
+    ==================================================== */
     #detalhes {
       padding: 100px 20px;
       background: linear-gradient(135deg, #F5EDE9 0%, var(--cor-branco) 100%);
@@ -316,83 +313,92 @@
       line-height: 1.5;
     }
 
-    #rsvp {
-      padding: 100px 20px;
-      background: var(--cor-branco);
+    /* ====================================================
+       DRESS CODE
+    ==================================================== */
+    #dresscode {
+      background: linear-gradient(135deg, #F5EDE9 0%, var(--cor-branco) 100%);
       text-align: center;
     }
 
-    .rsvp-form {
-      max-width: 480px;
-      margin: 48px auto 0;
+    /* Cabeçalho com padding normal */
+    .dresscode-header {
+      padding: 100px 20px 36px;
     }
 
-    .campo {
-      margin-bottom: 24px;
-      text-align: left;
-    }
-
-    .campo label {
-      display: block;
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--cor-texto-leve);
-      margin-bottom: 8px;
-    }
-
-    .campo input[type="text"],
-    .campo select {
-      width: 100%;
-      padding: 14px 16px;
-      border: 1px solid var(--cor-borda);
-      border-radius: 2px;
-      background: var(--cor-branco-puro);
-      font-family: var(--fonte-corpo);
-      font-size: 0.95rem;
-      color: var(--cor-texto);
-      appearance: none;
-      transition: border-color 0.3s;
-      color-scheme: light;
-    }
-
-    .campo input[type="text"]:focus,
-    .campo select:focus {
-      outline: none;
-      border-color: var(--cor-terracota);
-    }
-
-    .campo.select-wrapper {
-      position: relative;
-    }
-    .campo.select-wrapper::after {
-      content: '▾';
-      position: absolute;
-      right: 16px;
-      bottom: 15px;
-      color: var(--cor-terracota);
-      pointer-events: none;
-      font-size: 0.85rem;
-    }
-
-    .rsvp-sucesso {
-      display: none;
-      padding: 24px;
-      border: 1px solid var(--cor-terracota);
-      border-radius: 4px;
-      color: var(--cor-terracota);
+    .dresscode-subtexto {
       font-family: var(--fonte-titulo);
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 2vw, 1.2rem);
       font-style: italic;
-      margin-top: 24px;
+      font-weight: 300;
+      color: var(--cor-texto-leve);
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.7;
     }
 
+    /* =====================================================
+       👇 FOTO DO DRESS CODE — largura total, sem padding
+          A foto ocupa toda a largura da seção.
+          Troque o src na tag <img class="dresscode-foto"> no HTML.
+          Exemplo:
+          src="https://raw.githubusercontent.com/yNinooo/Casamento_F-A/main/dresscode.jpg"
+
+          aspect-ratio controla a altura da foto:
+            16/5  → bem panorâmica (mais baixa)
+            16/7  → equilíbrio paisagem
+            16/9  → paisagem padrão (mais alta)
+    ===================================================== */
+    .dresscode-foto-wrapper {
+      width: 100%;
+      aspect-ratio: 17 / 7;  /* 👈 ajuste aqui a altura da foto se necessário */
+      overflow: hidden;
+      background: var(--cor-borda);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dresscode-foto {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+    }
+
+    /* Aviso de cores proibidas — abaixo da foto */
+    .dresscode-aviso {
+      padding: 48px 20px 100px;
+    }
+
+    .dresscode-aviso p {
+      font-family: var(--fonte-titulo);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      font-weight: 300;
+      color: var(--cor-texto-leve);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .dresscode-aviso strong {
+      color: var(--cor-terracota-escuro);
+      font-style: italic;
+    }
+
+    /* ====================================================
+       PRESENTES
+    ==================================================== */
     #presentes {
       padding: 100px 20px;
       background: linear-gradient(135deg, #F5EDE9 0%, var(--cor-branco) 100%);
       text-align: center;
     }
 
+    /* ====================================================
+       CONTAGEM REGRESSIVA
+    ==================================================== */
     #countdown {
       padding: 100px 20px;
       background: var(--cor-texto);
@@ -411,44 +417,63 @@
 
     .countdown-grid {
       display: flex;
-      gap: 24px;
+      flex-wrap: nowrap;          /* 👈 impede quebra de linha */
+      align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 56px;
+      gap: 0;                     /* espaçamento controlado pelos próprios blocos */
+      width: 100%;
     }
 
     .countdown-bloco {
-      min-width: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* cresce e encolhe igualmente, mas não passa de 160px */
+      flex: 1 1 0;
+      max-width: 160px;
+      padding: 0 8px;
     }
 
     .countdown-numero {
       font-family: var(--fonte-contagem);
-      font-size: clamp(3.5rem, 10vw, 6rem);
+      /* escala suave: 6rem no desktop, ~3rem em telas de 320px */
+      font-size: clamp(2.4rem, 7vw, 6rem);
       font-weight: 300;
       color: var(--cor-branco);
       line-height: 1;
       display: block;
+      /* largura fixa de 2 chars para evitar "pulo" quando muda de 09→10 */
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.02em;
     }
 
     .countdown-label {
       font-family: var(--fonte-corpo);
-      font-size: 0.65rem;
+      font-size: clamp(0.5rem, 1.5vw, 0.65rem);
       letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--cor-terracota-claro);
-      margin-top: 8px;
+      margin-top: 10px;
       display: block;
+      white-space: nowrap;
     }
 
+    /* Separador ":" entre blocos */
     .countdown-divider {
       font-family: var(--fonte-contagem);
-      font-size: 4rem;
+      font-size: clamp(2rem, 6vw, 4rem);
       color: var(--cor-terracota);
-      opacity: 0.4;
+      opacity: 0.45;
+      line-height: 1;
+      /* alinha com a parte de cima dos números */
       align-self: flex-start;
-      padding-top: 8px;
+      padding-top: 0.05em;
+      flex-shrink: 0;
     }
 
+    /* ====================================================
+       RODAPÉ
+    ==================================================== */
     #rodape {
       padding: 60px 20px;
       background: var(--cor-branco);
@@ -481,6 +506,9 @@
       text-transform: uppercase;
     }
 
+    /* ====================================================
+       NAV LATERAL
+    ==================================================== */
     #nav-pontos {
       position: fixed;
       right: 20px;
@@ -507,17 +535,12 @@
     }
 
     @media (max-width: 600px) {
-      /* hero-foto já cuida do mobile via object-fit */
-
       .countdown-grid { gap: 12px; }
       .countdown-bloco { min-width: 70px; }
       .countdown-divider { font-size: 2.5rem; }
-
       #nav-pontos { display: none; }
-
       .detalhes-grid { grid-template-columns: 1fr; gap: 20px; }
     }
-
   </style>
 </head>
 
@@ -527,14 +550,10 @@
 
   <!-- ========================================================
        SEÇÃO 1 — HERO
-
-
-
-       👇 Para trocar a foto: mude o atributo src abaixo
+       👇 Para trocar a foto de fundo: mude o atributo src abaixo
   ======================================================== -->
   <section id="hero">
 
-    <!-- FOTO DE FUNDO — troque o src para mudar a foto -->
     <img
       class="hero-foto"
       src="https://raw.githubusercontent.com/yNinooo/Casamento_F-A/refs/heads/main/Foto de Fundo.JPG"
@@ -553,17 +572,33 @@
       </h1>
 
       <p class="hero-frase">
-        "O amor escreveu nossa histíria com calma, carinho e propósito.
+        "O amor escreveu nossa história com calma, carinho e propósito.
          Agora, queremos celebrar este capítulo inesquecível com você."
       </p>
 
       <p class="hero-data">27 · 09 · 2026 &nbsp;|&nbsp; Santo André, SP</p>
 
-      <a href="#rsvp" class="btn btn-solid">Confirmar Presença</a>
+      <!-- =====================================================
+           👇 BOTÃO DE CONFIRMAÇÃO DE PRESENÇA
+              Troque o "#" pelo link do seu Google Forms
+              Ex: href="https://forms.gle/seulink"
+      ====================================================== -->
+      <a
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn btn-solid"
+      >
+        Confirmar Presença
+      </a>
+
     </div>
   </section>
 
 
+  <!-- ========================================================
+       SEÇÃO 2 — NOSSA HISTÓRIA
+  ======================================================== -->
   <section id="sobre">
     <div class="container">
       <div class="fade-in" style="text-align:center;">
@@ -573,29 +608,32 @@
         <svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
       </div>
       <p class="sobre-texto fade-in">
-        Nossa história começou quando ainda éramos adolescentes, 
-        aos 15 anos, nos corredores da escola. Entre conversas, 
-        descobertas e sonhos de juventude, nasceu um sentimento 
+        Nossa história começou quando ainda éramos adolescentes,
+        aos 15 anos, nos corredores da escola. Entre conversas,
+        descobertas e sonhos de juventude, nasceu um sentimento
         que transformaria nossas vidas.
 
-        Com o passar do tempo, seguimos caminhos diferentes e ficamos 
-        separados por dois anos. Foi um período de crescimento, 
-        aprendizado e amadurecimento. Mas algumas histórias estão 
+        Com o passar do tempo, seguimos caminhos diferentes e ficamos
+        separados por dois anos. Foi um período de crescimento,
+        aprendizado e amadurecimento. Mas algumas histórias estão
         destinadas a acontecer, e a nossa encontrou o caminho de volta.
 
-        Nos reencontramos, recomeçamos e, desde então, construímos juntos 
-        uma relação baseada em amor, parceria, respeito e amizade. Hoje, 
-        depois de tantos momentos compartilhados, temos a certeza de que 
+        Nos reencontramos, recomeçamos e, desde então, construímos juntos
+        uma relação baseada em amor, parceria, respeito e amizade. Hoje,
+        depois de tantos momentos compartilhados, temos a certeza de que
         cada etapa da nossa trajetória nos trouxe exatamente até aqui.
 
-        Agora, com o coração cheio de gratidão, damos o próximo passo e 
-        convidamos você para celebrar conosco o início de um novo capítulo 
+        Agora, com o coração cheio de gratidão, damos o próximo passo e
+        convidamos você para celebrar conosco o início de um novo capítulo
         da nossa história.
       </p>
     </div>
   </section>
 
 
+  <!-- ========================================================
+       SEÇÃO 3 — DETALHES DO EVENTO
+  ======================================================== -->
   <section id="detalhes">
     <div class="container">
       <div class="fade-in" style="text-align:center;">
@@ -648,37 +686,52 @@
   </section>
 
 
-  <section id="rsvp">
-    <div class="container">
-      <div class="fade-in" style="text-align:center;">
-        <span class="secao-label">Confirmar presença</span>
-        <h2 class="secao-titulo">Você vai com a gente?</h2>
-        <p class="secao-texto" style="margin:0 auto 0;">
-          Por favor, confirme sua presença até <strong>31 de agosto de 2026</strong>.
-        </p>
-      </div>
-      <div class="rsvp-form fade-in">
-        <div class="campo">
-          <label for="rsvp-nome">Seu nome completo</label>
-          <input type="text" id="rsvp-nome" placeholder="Como você se chama?" autocomplete="name" />
-        </div>
-        <div class="campo select-wrapper">
-          <label for="rsvp-confirmacao">Você vai comparecer?</label>
-          <select id="rsvp-confirmacao">
-            <option value="" disabled selected>Selecione uma opção</option>
-            <option value="sim">✓ Sim, estarei lá!</option>
-            <option value="nao">✗ Infelizmente não poderei ir</option>
-          </select>
-        </div>
-        <button class="btn btn-solid" onclick="enviarRSVP()" style="width:100%;justify-content:center;">
-          Enviar confirmação
-        </button>
-        <div class="rsvp-sucesso" id="rsvp-sucesso"></div>
-      </div>
+  <!-- ========================================================
+       SEÇÃO 4 — DRESS CODE
+  ======================================================== -->
+  <section id="dresscode">
+
+    <!-- Cabeçalho da seção -->
+    <div class="dresscode-header fade-in">
+      <span class="secao-label">Dress Code</span>
+      <h2 class="secao-titulo">Trajes da cerimônia</h2>
     </div>
+
+    <!-- =====================================================
+         👇 FOTO DO DRESS CODE
+            Quando a foto estiver pronta, substitua o src abaixo
+            pelo link da imagem no GitHub (ou outro host).
+            Exemplo:
+            src="https://raw.githubusercontent.com/yNinooo/Casamento_F-A/main/dresscode.jpg"
+
+            Para ajustar a altura da foto, veja o comentário
+            "aspect-ratio" no CSS (busque por "👈 ajuste aqui").
+    ====================================================== -->
+    <div class="dresscode-foto-wrapper fade-in">
+      <img
+        class="dresscode-foto"
+        src="https://raw.githubusercontent.com/yNinooo/Casamento_F-A/main/DressCode.jpg"
+        alt="Trajes da cerimônia"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+      />
+    </div>
+
+    <!-- Texto de aviso abaixo da foto -->
+    <div class="dresscode-aviso fade-in">
+      <p>
+        <!-- 👇 Edite o aviso para os convidados aqui -->
+        Para não coincidir com os trajes da cerimônia, pedimos
+        que os convidados <strong>evitem as cores acima</strong> em suas escolhas.
+        Fora isso, fiquem à vontade para arrasar! 🤍
+      </p>
+    </div>
+
   </section>
 
 
+  <!-- ========================================================
+       SEÇÃO 5 — LISTA DE PRESENTES
+  ======================================================== -->
   <section id="presentes">
     <div class="container">
       <div class="fade-in" style="text-align:center;">
@@ -697,11 +750,13 @@
   </section>
 
 
+  <!-- ========================================================
+       SEÇÃO 6 — CONTAGEM REGRESSIVA
+  ======================================================== -->
   <section id="countdown">
     <div class="container">
       <div class="fade-in">
-        <span class="secao-label">Faltam apenas</span>
-        <h2 class="secao-titulo" style="color:var(--cor-branco);">Dias para o grande dia</h2>
+        <h2 class="secao-titulo" style="color:var(--cor-branco);">Faltam apenas</h2>
       </div>
       <div class="countdown-grid fade-in">
         <div class="countdown-bloco">
@@ -728,6 +783,9 @@
   </section>
 
 
+  <!-- ========================================================
+       RODAPÉ
+  ======================================================== -->
   <footer id="rodape">
     <div class="container fade-in">
       <div class="ornamento" aria-hidden="true">
@@ -741,13 +799,13 @@
 
 
   <script>
-    const secoes = ['hero', 'sobre', 'detalhes', 'rsvp', 'presentes', 'countdown'];
+    // Seções para navegação — "rsvp" removido
+    const secoes = ['hero', 'sobre', 'detalhes', 'dresscode', 'presentes', 'countdown'];
     const navPontos = document.getElementById('nav-pontos');
 
-    secoes.forEach((id, i) => {
+    secoes.forEach((id) => {
       const ponto = document.createElement('div');
       ponto.className = 'nav-ponto';
-      ponto.title = id.charAt(0).toUpperCase() + id.slice(1);
       ponto.setAttribute('aria-label', 'Ir para seção ' + id);
       ponto.addEventListener('click', () => {
         document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
@@ -784,51 +842,24 @@
       document.querySelectorAll('#hero .fade-in').forEach(el => el.classList.add('visivel'));
     }, 150);
 
-    const dataAlvo = new Date('2026-09-27T17:00:00');
+    // Contagem regressiva — data/hora da cerimônia
+    const dataAlvo = new Date('2026-09-27T10:30:00');
     const pad = n => String(n).padStart(2, '0');
 
     const atualizarContagem = () => {
-      const agora = new Date();
-      const diff  = dataAlvo - agora;
-
+      const diff = dataAlvo - new Date();
       if (diff <= 0) {
         document.querySelectorAll('.countdown-numero').forEach(el => el.textContent = '00');
         return;
       }
-
-      const dias    = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const horas   = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const segundos= Math.floor((diff % (1000 * 60)) / 1000);
-
-      document.getElementById('cd-dias').textContent    = pad(dias);
-      document.getElementById('cd-horas').textContent   = pad(horas);
-      document.getElementById('cd-minutos').textContent = pad(minutos);
-      document.getElementById('cd-segundos').textContent= pad(segundos);
+      document.getElementById('cd-dias').textContent    = pad(Math.floor(diff / 86400000));
+      document.getElementById('cd-horas').textContent   = pad(Math.floor((diff % 86400000) / 3600000));
+      document.getElementById('cd-minutos').textContent = pad(Math.floor((diff % 3600000) / 60000));
+      document.getElementById('cd-segundos').textContent= pad(Math.floor((diff % 60000) / 1000));
     };
 
     atualizarContagem();
     setInterval(atualizarContagem, 1000);
-
-    function enviarRSVP() {
-      const nome        = document.getElementById('rsvp-nome').value.trim();
-      const confirmacao = document.getElementById('rsvp-confirmacao').value;
-      const divSucesso  = document.getElementById('rsvp-sucesso');
-
-      if (!nome) { alert('Por favor, informe seu nome.'); return; }
-      if (!confirmacao) { alert('Por favor, informe se vai comparecer.'); return; }
-
-      if (confirmacao === 'sim') {
-        divSucesso.innerHTML = `🤍 Que alegria, <em>${nome}</em>!<br>Estamos ansiosos para celebrar com você.`;
-      } else {
-        divSucesso.innerHTML = `Obrigado por avisar, <em>${nome}</em>.<br>Sentiremos muito a sua falta. ❤️`;
-      }
-
-      divSucesso.style.display = 'block';
-      document.getElementById('rsvp-nome').value = '';
-      document.getElementById('rsvp-confirmacao').value = '';
-      divSucesso.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
   </script>
 
 </body>
