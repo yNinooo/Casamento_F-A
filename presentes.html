@@ -435,6 +435,13 @@
       max-width: 200px;
       line-height: 1.5;
     }
+    .qr-imagem {
+      width: 160px;
+      height: 160px;
+      object-fit: contain;
+      border-radius: 8px;
+      display: block;
+    }
 
     /* Campo da chave PIX */
     .pix-campo {
@@ -673,10 +680,11 @@
       <div class="modal-body">
         <!-- QR Code -->
         <div class="qr-area" id="qr-area" aria-label="Área do QR Code PIX">
-          <div class="qr-placeholder">
+          <div class="qr-placeholder" id="qr-placeholder">
             <span class="qr-icon" aria-hidden="true">▦</span>
             <p>QR Code PIX<br><em>será adicionado aqui</em></p>
           </div>
+          <img class="qr-imagem" id="qr-imagem" src="" alt="QR Code PIX" style="display:none;" />
         </div>
 
         <!-- Chave PIX + botão copiar -->
@@ -713,7 +721,7 @@
        DADOS DOS PRESENTES
     ────────────────────────────────────────────── */
     // Link da imagem usada em todos os cards. Para trocar, edite só esta linha.
-    
+
 
     const presentes = [
       {
@@ -724,6 +732,8 @@
         valor: 300,
         cor: "#e8b4bc",
         imagem: "https://raw.githubusercontent.com/yNinooo/Casamento_F-A/refs/heads/main/Img/Ronaldo.JPEG",
+        chavePix: "822980d6-340a-4d5f-82a2-86f7f2aefd74",
+        qrCode: "https://raw.githubusercontent.com/yNinooo/Casamento_F-A/refs/heads/main/Img/QR/QR_Cabelo.png",
       },
       {
         id: 2,
@@ -733,6 +743,8 @@
         valor: 140,
         cor: "#b8964e",
         imagem: "https://raw.githubusercontent.com/yNinooo/Casamento_F-A/refs/heads/main/Img/Coberta.JPEG",
+        chavePix: "SUA_CHAVE_PIX_2",
+        qrCode: "SUA_URL_QRCODE_2",
       },
       {
         id: 3,
@@ -742,6 +754,8 @@
         valor: 175,
         cor: "#7a8c6e",
         imagem: "https://raw.githubusercontent.com/yNinooo/Casamento_F-A/refs/heads/main/Img/Buque.JPEG",
+        chavePix: "SUA_CHAVE_PIX_3",
+        qrCode: "SUA_URL_QRCODE_3",
       },
       {
         id: 4,
@@ -751,6 +765,8 @@
         valor: 200,
         cor: "#c4808a",
         imagem: "https://raw.githubusercontent.com/yNinooo/Casamento_F-A/refs/heads/main/Img/Boletos.JPEG",
+        chavePix: "SUA_CHAVE_PIX_4",
+        qrCode: "SUA_URL_QRCODE_4",
       },
       {
         id: 5,
@@ -760,6 +776,8 @@
         valor: "129,90",
         cor: "#b8964e",
         imagem: "https://raw.githubusercontent.com/yNinooo/Casamento_F-A/refs/heads/main/Img/Capacete.JPEG",
+        chavePix: "SUA_CHAVE_PIX_5",
+        qrCode: "SUA_URL_QRCODE_5",
       },
       {
         id: 6,
@@ -769,6 +787,8 @@
         valor: 350,
         cor: "#7a8c6e",
         imagem: "https://raw.githubusercontent.com/yNinooo/Casamento_F-A/refs/heads/main/Img/Idosas.JPEG",
+        chavePix: "SUA_CHAVE_PIX_6",
+        qrCode: "SUA_URL_QRCODE_6",
       },
       {
         id: 7,
@@ -778,6 +798,8 @@
         valor: "119,90",
         cor: "#c4808a",
         imagem: "https://raw.githubusercontent.com/yNinooo/Casamento_F-A/refs/heads/main/Img/Rolo.JPEG",
+        chavePix: "SUA_CHAVE_PIX_7",
+        qrCode: "SUA_URL_QRCODE_7",
       },
       {
         id: 8,
@@ -787,6 +809,8 @@
         valor: 450,
         cor: "#b8964e",
         imagem: "https://raw.githubusercontent.com/yNinooo/Casamento_F-A/refs/heads/main/Img/Casa.JPEG",
+        chavePix: "SUA_CHAVE_PIX_8",
+        qrCode: "SUA_URL_QRCODE_8",
       },
       {
         id: 9,
@@ -796,6 +820,8 @@
         valor: 250,
         cor: "#c4808a",
         imagem: "https://raw.githubusercontent.com/yNinooo/Casamento_F-A/refs/heads/main/Img/Cueca.JPEG",
+        chavePix: "SUA_CHAVE_PIX_9",
+        qrCode: "SUA_URL_QRCODE_9",
       },
       {
         id: 10,
@@ -805,6 +831,8 @@
         valor: 400,
         cor: "#b8964e",
         imagem: "https://raw.githubusercontent.com/yNinooo/Casamento_F-A/refs/heads/main/Img/Restaurante.JPEG",
+        chavePix: "SUA_CHAVE_PIX_10",
+        qrCode: "SUA_URL_QRCODE_10",
       },
 
 
@@ -820,6 +848,8 @@
         cor: "#c4808a",
         premium: true,
         imagem: "https://raw.githubusercontent.com/yNinooo/Casamento_F-A/refs/heads/main/Img/Crianca.JPEG",
+        chavePix: "SUA_CHAVE_PIX_15",
+        qrCode: "SUA_URL_QRCODE_15",
       },
         {
         id: 16,
@@ -830,6 +860,8 @@
         cor: "#b8964e",
         premium: true,
         imagem: "https://raw.githubusercontent.com/yNinooo/Casamento_F-A/refs/heads/main/Img/Aluguel.JPEG",
+        chavePix: "SUA_CHAVE_PIX_16",
+        qrCode: "SUA_URL_QRCODE_16",
       }
     ];
 
@@ -905,9 +937,8 @@
     const pixInput   = document.getElementById('pix-input');
     const btnFechar  = document.getElementById('modal-fechar');
     const btnCopiar  = document.getElementById('btn-copiar');
-
-    // Chave PIX do casal — altere aqui!
-    const CHAVE_PIX = 'sua-chave-pix@email.com';
+    const qrImagem   = document.getElementById('qr-imagem');
+    const qrPlaceholder = document.getElementById('qr-placeholder');
 
     function abrirModal(id) {
       const presente = presentes.find(p => p.id === id);
@@ -916,11 +947,22 @@
       modalIcon.textContent  = presente.emoji;
       modalTit.textContent   = presente.titulo;
       modalValor.textContent = `R$ ${presente.valor}`;
-      pixInput.value         = CHAVE_PIX;
+      pixInput.value         = presente.chavePix;
 
       // Reset botão copiar
       btnCopiar.textContent = '⎘ Copiar PIX';
       btnCopiar.classList.remove('copiado');
+
+      // QR Code específico do presente
+      if (presente.qrCode && !presente.qrCode.startsWith('SUA_URL_QRCODE')) {
+        qrImagem.src = presente.qrCode;
+        qrImagem.style.display = 'block';
+        qrPlaceholder.style.display = 'none';
+      } else {
+        qrImagem.src = '';
+        qrImagem.style.display = 'none';
+        qrPlaceholder.style.display = 'flex';
+      }
 
       overlay.classList.add('ativo');
       overlay.setAttribute('aria-hidden', 'false');
